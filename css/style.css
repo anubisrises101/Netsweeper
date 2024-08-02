@@ -2,3 +2,14 @@ body {
     background-image: url(/Assets/man_fishing.jpg);
     background-size: 100vw;
 }
+
+#board {
+    display: grid;
+    grid-template-columns: 20;
+    grid-template-rows: 20;
+    box-sizing: border-box;
+}
+
+#logo {
+    max-width: 125px;
+}
