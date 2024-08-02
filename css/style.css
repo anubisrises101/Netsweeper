@@ -1,12 +1,12 @@
 body {
     background-image: url(/Assets/man_fishing.jpg);
-    background-size: 100vw;
+    background-size: 100%;
 }
 
 #board {
     display: grid;
-    grid-template-columns: 20;
-    grid-template-rows: 20;
+    grid-template-columns: 10;
+    grid-template-rows: 10;
     box-sizing: border-box;
 }
 
