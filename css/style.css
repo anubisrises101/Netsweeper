@@ -1,15 +1,61 @@
 body {
     background-image: url(/Assets/man_fishing.jpg);
     background-size: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border: 5px dotted red; */
+    height: 100vh;
 }
 
 #board {
     display: grid;
-    grid-template-columns: 10;
-    grid-template-rows: 10;
-    box-sizing: border-box;
+    /* border: 5px dotted red; */
+    width: min-content;
+    grid-template-columns: repeat(10, 5vmin);
+    grid-template-rows: repeat(10, 5vmin);
+    column-gap: 0px;
+    justify-content: end;
+    /* margin-right: 5rem; */
+    background-color: grey;
 }
 
 #logo {
     max-width: 125px;
+    /* margin-top: 300px; 
+    move logo to the right */
+}
+
+.cell {
+    display: flex;
+    border-style: ridge;
+    background-color: lightgray;
+    /* font-size: 3.5vw; */
+    font-size: clamp(1rem, 3.5vw, 5rem);
+    justify-content: center;
+    align-items: center;
+    /* make the inner boxes ridged like the border */
+}
+
+#fried_shrimp {
+    visibility: hidden;
+}
+
+.resetBtn {
+    align-items: end;
+    
+}
+
+.buttonBox {
+    display: flex;
+    justify-content: right;
+    /* margin-right: 123px; 
+    make the button squared and center*/
+}
+
+#rightSide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 5px dotted red; */
 }

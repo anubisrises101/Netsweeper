@@ -10,15 +10,15 @@ A unique take on the classic minesweeper game.
 nested for loop to create a grid? 
 class of rows, every div is a row 
 // 3) initialize the game state and render the board
-
-
-
-
-
-
+// set up click listener to assign flags on a right click/ update the state of the board
 // 3_set up event listeners for each cell 
 
-// set up click listener to assign flags on a right click/ update the state of the board
+
+
+
+
+
+
 
 //  place mines at random locations on the board 
 
