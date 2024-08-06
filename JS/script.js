@@ -13,15 +13,18 @@ let cellEls;
 const container = document.getElementById('board');
 const shrimpButtonEl = document.getElementById('live_shrimp');
 const deadShrimpBtmEl = document.getElementById('fried_shrimp');
+const winMessage = document.getElementById('winner');
 
 /*----- event listeners -----*/
 shrimpButtonEl.addEventListener('click', () => {
-    resetBoard();
+    init();
 });
+// these need to also reset the board state
 deadShrimpBtmEl.addEventListener('click', () => {
-    resetBoard();
+    init();
 });
 container.addEventListener('contextmenu', handleToggleFlag);
+container.addEventListener('click', handleReveal);
 
 
 
@@ -35,6 +38,7 @@ function init() {
     setNets();
     computeAdjacentNetCounts()
     winner = null;
+    getWinner()
     console.log(board)
     render();
 }
@@ -58,6 +62,25 @@ function render() {
     });
 }
 
+// function reveal(cell) {
+    // 1. Set cell.isRevealed to true
+    // 2. Set cell.isFlagged to false
+    // 3. If the cell has zero adjacent mines (cell.adjMineCount is 0)
+      // 3.1. For each neighboring cell object of cell
+        // 3.1.1. If the neighbor is not revealed AND the
+        //        neighbor is not a mine, reveal the
+        //        neighbor recursively - reveal(neighbor)
+    // Note that there's no reason to call render because that's
+    // going to be called in handleCellClick
+//   }
+
+function getWinner() {
+  // 1. Iterate over all cell objects
+    // 1.1. If cell isNet and not cell.isFlagged return null
+    // 1.2. Else if cell not isRevealed return null
+  // 2. return true  Chicken Dinner!
+}
+
 function getCellObj(cellEl) {
     const seperatorIdx = cellEl.id.indexOf('-');
     const rowIdx = parseInt(cellEl.id.slice(0, seperatorIdx));
@@ -66,12 +89,26 @@ function getCellObj(cellEl) {
 }
 
 function handleToggleFlag(evt) {
+    if (!evt.target.matches('.cell')) return;
     evt.preventDefault();
     const cell = getCellObj(evt.target);
     if (cell.isRevealed) return;
     cell.isFlagged = !cell.isFlagged;
     render();
 }
+
+function handleReveal(evt) {
+    if (!evt.target.matches('.cell')) return;
+    const cell = getCellObj(evt.target);
+    if (cell.isRevealed) return;
+    if (cell.isNet && cell.isFlagged === true) {
+
+    }
+    cell.isRevealed = true;
+    winner = getWinner();
+    render();
+}
+
 
 function generateCellsInBoard() {
     for (let rowIdx = 0; rowIdx < BOARD_ROWS; rowIdx++) {
@@ -94,7 +131,7 @@ function generateCellsInBoard() {
 }
 
 function setNets() {
-    const NET_PCT = .2;
+    const NET_PCT = .15;
     let netsToPlace = Math.round(BOARD_ROWS * BOARD_COLS * NET_PCT);
     while (netsToPlace > 0) {
         let rndRowIdx = Math.floor(Math.random() * BOARD_ROWS);
@@ -125,14 +162,8 @@ function computeAdjacentNetCounts() {
     }
 }
 
-// iterate through cell objects in board array 
-// for each cell object 
-    // 1. set a counter to 0 
-    // 2. create an array with this cells neighboring cell objects
-    // 3. iterate through neighboring cell objects 
-        // 1. increase counter if this neighbor.isNet 
-    // 4. assign count to cell.adjNetCount 
 
-// if net is adj then + 1, if not return
+
+
 // clicking a cell with a net ends the game reveal all cells then call render 
 // link reset button to init 
