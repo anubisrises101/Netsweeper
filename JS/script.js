@@ -25,7 +25,7 @@ deadShrimpBtmEl.addEventListener('click', () => {
 
 /*----- functions -----*/
 init();
- 
+
 function init() {
     board = [];
     generateCellsInBoard();
@@ -35,6 +35,28 @@ function init() {
     winner = null;
     console.log(board)
     render();
+}
+
+function render() {
+    //render cells
+    cellEls.forEach((cellEl) => {
+        const seperatorIdx = cellEl.id.indexOf('-');
+        const rowIdx = parseInt(cellEl.id.slice(0, seperatorIdx));
+        const colIdx = parseInt(cellEl.id.slice(seperatorIdx + 1));
+        const cell = board[rowIdx][colIdx];
+        if (cell.isRevealed) {
+            if (cell.isNet) {
+                cellEl.innerText = '🕸️';
+            } else {
+                cellEl.innerText = cell.adjNetCount
+            }
+        } else if (cell.isFlagged) {
+            cellEl.innerText = '🛟';
+        } else {
+            cellEl.innerText = '';
+        }
+        // console.log(cellEl.id, rowIdx, colIdx);
+    });
 }
 
 function generateCellsInBoard() {
@@ -53,13 +75,6 @@ function generateCellsInBoard() {
             cell.className = 'cell';
             cell.id = `${rowIdx}-${colIdx}`;
             container.appendChild(cell);
-            cell.addEventListener('click', () => {
-                cell.style.borderStyle = 'none'
-            });
-            cell.addEventListener('contextmenu', (event) => {
-                event.preventDefault();
-                cell.innerText = '🛟'
-            });
         }
     }  
 }
@@ -77,9 +92,6 @@ function setNets() {
     }
 }
 
-function render() {
-    
-}
 
 function computeAdjacentNetCounts() {
     for (let rowIdx = 0; rowIdx < BOARD_ROWS; rowIdx++) {
