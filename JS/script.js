@@ -21,6 +21,8 @@ shrimpButtonEl.addEventListener('click', () => {
 deadShrimpBtmEl.addEventListener('click', () => {
     resetBoard();
 });
+container.addEventListener('contextmenu', handleToggleFlag);
+
 
 
 /*----- functions -----*/
@@ -40,10 +42,7 @@ function init() {
 function render() {
     //render cells
     cellEls.forEach((cellEl) => {
-        const seperatorIdx = cellEl.id.indexOf('-');
-        const rowIdx = parseInt(cellEl.id.slice(0, seperatorIdx));
-        const colIdx = parseInt(cellEl.id.slice(seperatorIdx + 1));
-        const cell = board[rowIdx][colIdx];
+        const cell = getCellObj(cellEl);
         if (cell.isRevealed) {
             if (cell.isNet) {
                 cellEl.innerText = '🕸️';
@@ -57,6 +56,21 @@ function render() {
         }
         // console.log(cellEl.id, rowIdx, colIdx);
     });
+}
+
+function getCellObj(cellEl) {
+    const seperatorIdx = cellEl.id.indexOf('-');
+    const rowIdx = parseInt(cellEl.id.slice(0, seperatorIdx));
+    const colIdx = parseInt(cellEl.id.slice(seperatorIdx + 1));
+    return board[rowIdx][colIdx];
+}
+
+function handleToggleFlag(evt) {
+    evt.preventDefault();
+    const cell = getCellObj(evt.target);
+    if (cell.isRevealed) return;
+    cell.isFlagged = !cell.isFlagged;
+    render();
 }
 
 function generateCellsInBoard() {
