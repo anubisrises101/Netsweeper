@@ -1,6 +1,6 @@
 body {
     background-image: url('../Assets/man_fishing.jpg');
-    background-size: 100%;
+    background-size: 100vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
