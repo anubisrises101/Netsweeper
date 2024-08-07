@@ -11,7 +11,7 @@ This is a new and unique take on a classic game that unless you were growing up 
 
 The origin of Minesweeper is unclear. According to TechRadar, the first version of the game was 1990's Microsoft Minesweeper. Cited - Wikimedia Foundation. (2024, July 19). Minesweeper (video game). Wikipedia. https://en.wikipedia.org/wiki/Minesweeper_(video_game).
 
-So with all that being said, I chose my version of this game based on my wife's ideas! I asked her for ideas for a button to make it different, and her response was a shrimp emoji! That lead me down the road of creativity where we are today...
+So with all that being said, I chose my version of this game based on my wife's ideas! I asked her for ideas for a button to make it different, and her response was a shrimp emoji! She even created the logo you see above. All this lead me down the road of creativity where we are today...
 
 ## Information
 
