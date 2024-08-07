@@ -158,7 +158,7 @@ function generateCellsInBoard() {
 }; 
 
 function setNets() {
-    const NET_PCT = .15;
+    const NET_PCT = .20;
     let netsToPlace = Math.round(BOARD_ROWS * BOARD_COLS * NET_PCT);
     while (netsToPlace > 0) {
         let rndRowIdx = Math.floor(Math.random() * BOARD_ROWS);
