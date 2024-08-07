@@ -37,3 +37,10 @@ Here is a nice pretty list of the different technologies used to create this web
 ## Closing remarks
 
 Thank you so much for taking the time to try out my game and be sure to give me any feedback you might have! You can reach me on [LinkedIn](www.linkedin.com/in/phillip-mckenzie-ba0a8010a) or via email at pmckenziecoding@gmail.com.
+
+## Credits
+
+Logo design - Robin C.
+Background image - iStock/ Artist - JasonCordell
+Sounds - Freesounds
+Emojis - Emojipedia
