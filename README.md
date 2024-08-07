@@ -40,7 +40,7 @@ Thank you so much for taking the time to try out my game and be sure to give me 
 
 ## Credits
 
-Logo design - Robin C.
-Background image - iStock/ Artist - JasonCordell
-Sounds - Freesounds
-Emojis - Emojipedia
+* Logo design - Robin C.
+* Background image - iStock/ Artist - JasonCordell
+* Sounds - Freesounds
+* Emojis - Emojipedia
