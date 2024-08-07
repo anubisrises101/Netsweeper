@@ -15,16 +15,17 @@ const container = document.getElementById('board');
 const shrimpButtonEl = document.getElementById('live_shrimp');
 const deadShrimpBtmEl = document.getElementById('fried_shrimp');
 const winMessage = document.getElementById('winner');
-const message = document.getElementById('message')
+const message = document.getElementById('message');
 
 /*----- event listeners -----*/
 shrimpButtonEl.addEventListener('click', () => {
     init();
 });
-// these need to also reset the board state
+
 deadShrimpBtmEl.addEventListener('click', () => {
     init();
 });
+
 container.addEventListener('contextmenu', handleToggleFlag);
 container.addEventListener('click', handleReveal);
 
@@ -34,19 +35,23 @@ container.addEventListener('click', handleReveal);
 init();
 
 function init() {
+    container.addEventListener('contextmenu', handleToggleFlag);
+    container.addEventListener('click', handleReveal);
+    message.innerText = 'Welcome to NetSweeper!';
+    removeCellsInBoard();
     board = [];
+    cellEls = null;
     generateCellsInBoard();
     cellEls = document.querySelectorAll('.cell');
     setNets();
-    computeAdjacentNetCounts()
+    computeAdjacentNetCounts();
     winner = null;
-    console.log(board)
+    looser = null;
+
     render();
-}
+};
 
 function render() {
-
-    //render cells
     cellEls.forEach((cellEl) => {
         const cell = getCellObj(cellEl);
         if (cell.isRevealed) {
@@ -59,12 +64,11 @@ function render() {
             cellEl.innerText = '🛟';
         } else {
             cellEl.innerText = '';
-        }
-        // console.log(cellEl.id, rowIdx, colIdx);
+        };
     });
-}
+};
 
-// function reveal(cell) {
+function reveal(cell) {
     // 1. Set cell.isRevealed to true
     // 2. Set cell.isFlagged to false
     // 3. If the cell has zero adjacent mines (cell.adjMineCount is 0)
@@ -74,39 +78,36 @@ function render() {
     //        neighbor recursively - reveal(neighbor)
     // Note that there's no reason to call render because that's
     // going to be called in handleCellClick
-    //   }
+}
     
-function getWinner(cell) {
-    // for (let rowIdx = 0; rowIdx < BOARD_ROWS; rowIdx++) {
-        //     for (let colIdx = 0; colIdx < BOARD_COLS; colIdx++) {
-            //         const cell = board[rowIdx][colIdx];
-            console.log(cell)
-            // if all cells minus - netted cells are revealed you win
-            if (cell.isRevealed && !cell.isNet) {
-                console.log('you win')
-            } else {
-                return null 
-            }
-        }
-//  }
-//}
-    
+function getWinner() {
+    let counter = 0;
+    for (let rowIdx = 0; rowIdx < BOARD_ROWS; rowIdx++) {
+        for (let colIdx = 0; colIdx < BOARD_COLS; colIdx++) {
+            if (!board[rowIdx][colIdx].isRevealed && !board[rowIdx][colIdx].isNet) {
+                counter++
+            };
+        };
+    };
+    return counter === 0 ? true : false;
+};  
+
 function gameOver(cell) {
     if (cell.isNet) {
         message.innerText = 'Oh no your shrimp has been caught!'
         container.removeEventListener('click', handleReveal);
-        container.addEventListener('contextmenu', handleToggleFlag);
+        container.removeEventListener('contextmenu', handleToggleFlag);
     } else {
 
-    }
-}
+    };
+};
 
 function getCellObj(cellEl) {
     const seperatorIdx = cellEl.id.indexOf('-');
     const rowIdx = parseInt(cellEl.id.slice(0, seperatorIdx));
     const colIdx = parseInt(cellEl.id.slice(seperatorIdx + 1));
     return board[rowIdx][colIdx];
-}
+};
 
 function handleToggleFlag(evt) {
     if (!evt.target.matches('.cell')) return;
@@ -114,19 +115,27 @@ function handleToggleFlag(evt) {
     const cell = getCellObj(evt.target);
     if (cell.isRevealed) return;
     cell.isFlagged = !cell.isFlagged;
-    console.log(winner)
+    console.log(winner);
     render();
-}
+};
 
 function handleReveal(evt) {
     if (!evt.target.matches('.cell')) return;
     const cell = getCellObj(evt.target);
     if (cell.isRevealed) return;
     cell.isRevealed = true;
-    console.log(winner)
+    winner = getWinner();
+    console.log(winner);
     looser = gameOver(cell);
     render();
-}
+};
+
+function removeCellsInBoard() {
+    let cellsToDelete = document.querySelectorAll('.cell')
+    cellsToDelete.forEach((cell) => {
+        container.removeChild(cell)
+    });
+};
 
 
 function generateCellsInBoard() {
@@ -145,9 +154,9 @@ function generateCellsInBoard() {
             cell.className = 'cell';
             cell.id = `${rowIdx}-${colIdx}`;
             container.appendChild(cell);
-        }
-    }  
-}
+        };
+    };
+}; 
 
 function setNets() {
     const NET_PCT = .15;
@@ -158,9 +167,9 @@ function setNets() {
         if (!board[rndRowIdx][rndColIdx].isNet) {
             board[rndRowIdx][rndColIdx].isNet = true;
             netsToPlace--;
-        } 
-    }
-}
+        }; 
+    };
+};
 
 
 function computeAdjacentNetCounts() {
@@ -173,16 +182,10 @@ function computeAdjacentNetCounts() {
                     const col = colIdx + colOffset;
                     if (board[row] && board[row][col]) {
                         if (board[row][col].isNet) counter++;
-                    }
-                }
-            }
+                    };
+                };
+            };
             board[rowIdx][colIdx].adjNetCount = counter;  
-        }
-    }
-}
-
-
-
-
-// clicking a cell with a net ends the game reveal all cells then call render 
-// link reset button to init 
+        };
+    };
+};
