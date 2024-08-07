@@ -59,7 +59,7 @@ function render() {
                 cellEl.innerText = '🕸️';
             } else if (cell.adjNetCount > 0) {
                 cellEl.innerText = cell.adjNetCount
-            }
+            };
         } else if (cell.isFlagged) {
             cellEl.innerText = '🛟';
         } else {
@@ -86,8 +86,6 @@ function gameOver(cell) {
         message.innerText = 'Oh no your shrimp has been caught!'
         container.removeEventListener('click', handleReveal);
         container.removeEventListener('contextmenu', handleToggleFlag);
-    } else {
-        
     };
 };
 
@@ -114,7 +112,7 @@ function handleReveal(evt) {
     if (cell.isRevealed) return;
     if (cell.isNet) {
         cell.isRevealed = true;
-    }
+    };
     winner = getWinner();
     looser = gameOver(cell);
     reveal(cell.rowIdx, cell.colIdx);
@@ -184,9 +182,7 @@ function computeAdjacentNetCounts() {
 function reveal(rowIdx, colIdx) {
             if (rowIdx < 0 || rowIdx >= BOARD_ROWS || colIdx < 0 || colIdx >= BOARD_COLS) {
                 return
-
             };
-            console.log(board[rowIdx][colIdx])
             if (board[rowIdx][colIdx].isRevealed || board[rowIdx][colIdx].isNet) return;
             board[rowIdx][colIdx].isRevealed = true;
             board[rowIdx][colIdx].isFlagged = false;
@@ -200,4 +196,4 @@ function reveal(rowIdx, colIdx) {
                 reveal(rowIdx + 1, colIdx);
                 reveal(rowIdx + 1, colIdx + 1);
             };
-    };
+};
