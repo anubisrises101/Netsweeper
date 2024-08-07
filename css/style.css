@@ -1,5 +1,5 @@
 body {
-    background-image: url(/Assets/man_fishing.jpg);
+    background-image: url('../Assets/man_fishing.jpg');
     background-size: 100%;
     display: flex;
     justify-content: space-between;
