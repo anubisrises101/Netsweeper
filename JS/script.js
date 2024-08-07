@@ -45,6 +45,7 @@ function init() {
 }
 
 function render() {
+
     //render cells
     cellEls.forEach((cellEl) => {
         const cell = getCellObj(cellEl);
@@ -80,12 +81,11 @@ function getWinner(cell) {
         //     for (let colIdx = 0; colIdx < BOARD_COLS; colIdx++) {
             //         const cell = board[rowIdx][colIdx];
             console.log(cell)
-            if (cell.isNet && !cell.isFlagged) {
-                return null
-            } else if (!cell.isRevealed) {
-                return null
+            // if all cells minus - netted cells are revealed you win
+            if (cell.isRevealed && !cell.isNet) {
+                console.log('you win')
             } else {
-                return true
+                return null 
             }
         }
 //  }
@@ -96,6 +96,8 @@ function gameOver(cell) {
         message.innerText = 'Oh no your shrimp has been caught!'
         container.removeEventListener('click', handleReveal);
         container.addEventListener('contextmenu', handleToggleFlag);
+    } else {
+
     }
 }
 
@@ -112,7 +114,6 @@ function handleToggleFlag(evt) {
     const cell = getCellObj(evt.target);
     if (cell.isRevealed) return;
     cell.isFlagged = !cell.isFlagged;
-    winner = getWinner(cell);
     console.log(winner)
     render();
 }
@@ -122,7 +123,6 @@ function handleReveal(evt) {
     const cell = getCellObj(evt.target);
     if (cell.isRevealed) return;
     cell.isRevealed = true;
-    winner = getWinner(cell);
     console.log(winner)
     looser = gameOver(cell);
     render();
