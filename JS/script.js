@@ -16,6 +16,7 @@ const shrimpButtonEl = document.getElementById('live_shrimp');
 const deadShrimpBtmEl = document.getElementById('fried_shrimp');
 const winMessage = document.getElementById('winner');
 const message = document.getElementById('message');
+const splashAudio = document.getElementById('splash');
 
 /*----- event listeners -----*/
 shrimpButtonEl.addEventListener('click', () => {
@@ -106,6 +107,12 @@ function handleToggleFlag(evt) {
     render();
 };
 
+function playSplash() {
+    console.log('sound is running')
+    splashAudio.play();
+    // splashAudio.pause()
+};
+
 function handleReveal(evt) {
     if (!evt.target.matches('.cell')) return;
     const cell = getCellObj(evt.target);
@@ -116,6 +123,9 @@ function handleReveal(evt) {
     winner = getWinner();
     looser = gameOver(cell);
     reveal(cell.rowIdx, cell.colIdx);
+    if (cell.isRevealed && !cell.isNet) {
+        playSplash()
+    };
     render();
 };
 

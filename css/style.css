@@ -1,6 +1,6 @@
 body {
-    background-image: url('../Assets/man_fishing.jpg');
-    background-size: 100vh;
+    background-image: url('../Assets/shrimp_boat.jpg');
+    background-size: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -9,10 +9,10 @@ body {
 }
 
 #stats {
-    font-size: 10px;
+    font-size: 12px;
+    font-style: italic;
     font-weight: bold;
-    background-color: gray;
-    border-style: ridge;
+    color: rgb(0, 255, 251);
 }
 
 #board {
@@ -27,7 +27,10 @@ body {
 }
 
 #logo {
+    display: flex;
+    justify-content: center;
     max-width: 125px;
+
 }
 
 .cell {
@@ -67,5 +70,12 @@ body {
 
 #header {
     display: flex;
+    justify-content: center;
+    margin-left: 200px;
+    color: #2d1bb3;
 
+}
+
+#splash {
+    display: none;
 }
