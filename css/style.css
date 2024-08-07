@@ -6,6 +6,7 @@ body {
     align-items: center;
     /* border: 5px dotted red; */
     height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
 }
 /* look into disabling blue highlight user */
 #board {
@@ -32,7 +33,7 @@ body {
     border-style: ridge;
     background-color: lightgray;
     /* font-size: 3.5vw; */
-    font-size: clamp(1rem, 3.5vw, 5rem);
+    font-size: clamp(1rem, 3.5vw, 1.5rem);
     justify-content: center;
     align-items: center;
     /* make the inner boxes ridged like the border */
@@ -63,5 +64,5 @@ body {
 
 #header {
     display: flex;
-    
+
 }
