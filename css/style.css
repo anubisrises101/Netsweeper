@@ -11,6 +11,7 @@ body {
 #stats {
     font-size: 10px;
     font-weight: bold;
+    background-color: gray;
 }
 
 #board {
