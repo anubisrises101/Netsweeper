@@ -4,43 +4,41 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* border: 5px dotted red; */
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
 }
 
 #stats {
-    
+    font-size: 10px;
+    font-weight: bold;
 }
-/* look into disabling blue highlight user */
+
 #board {
     display: grid;
-    /* border: 5px dotted red; */
     width: min-content;
     grid-template-columns: repeat(10, 5vmin);
     grid-template-rows: repeat(10, 5vmin);
     column-gap: 0px;
     justify-content: end;
-    /* margin-right: 5rem; */
     background-color: grey;
     user-select: none;
 }
 
 #logo {
     max-width: 125px;
-    /* margin-top: 300px; 
-    move logo to the right */
 }
 
 .cell {
     display: flex;
     border-style: ridge;
     background-color: lightgray;
-    /* font-size: 3.5vw; */
     font-size: clamp(1rem, 3.5vw, 1.5rem);
     justify-content: center;
     align-items: center;
-    /* make the inner boxes ridged like the border */
+}
+
+.revealed {
+    background-color: aqua;
 }
 
 #fried_shrimp {
@@ -63,7 +61,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* border: 5px dotted red; */
 }
 
 #header {

@@ -54,9 +54,10 @@ function render() {
     cellEls.forEach((cellEl) => {
         const cell = getCellObj(cellEl);
         if (cell.isRevealed) {
+            cellEl.classList.add('revealed')
             if (cell.isNet) {
                 cellEl.innerText = '🕸️';
-            } else {
+            } else if (cell.adjNetCount > 0) {
                 cellEl.innerText = cell.adjNetCount
             }
         } else if (cell.isFlagged) {
@@ -111,7 +112,9 @@ function handleReveal(evt) {
     if (!evt.target.matches('.cell')) return;
     const cell = getCellObj(evt.target);
     if (cell.isRevealed) return;
-    cell.isRevealed = true;
+    if (cell.isNet) {
+        cell.isRevealed = true;
+    }
     winner = getWinner();
     looser = gameOver(cell);
     reveal(cell.rowIdx, cell.colIdx);
@@ -178,34 +181,23 @@ function computeAdjacentNetCounts() {
     };
 };
 
-function reveal(rowIdx, colIdx) { console.log(rowIdx, colIdx)
-    console.log(board[rowIdx][colIdx])
-            if (rowIdx < 0 || rowIdx > BOARD_ROWS || colIdx < 0 || colIdx > BOARD_COLS || board[rowIdx][colIdx].adjNetCount) {
-                console.log('returning')
+function reveal(rowIdx, colIdx) {
+            if (rowIdx < 0 || rowIdx >= BOARD_ROWS || colIdx < 0 || colIdx >= BOARD_COLS) {
                 return
 
             };
-            if (!board[rowIdx][colIdx].isNet && !board[rowIdx][colIdx].isRevealed) {
-                board[rowIdx][colIdx].isRevealed = true;
-                board[rowIdx][colIdx].isFlagged = false;
+            console.log(board[rowIdx][colIdx])
+            if (board[rowIdx][colIdx].isRevealed || board[rowIdx][colIdx].isNet) return;
+            board[rowIdx][colIdx].isRevealed = true;
+            board[rowIdx][colIdx].isFlagged = false;
+            if (board[rowIdx][colIdx].adjNetCount === 0){
+                reveal(rowIdx - 1, colIdx - 1);
+                reveal(rowIdx - 1, colIdx);
+                reveal(rowIdx - 1, colIdx + 1);
+                reveal(rowIdx, colIdx - 1);
+                reveal(rowIdx, colIdx + 1);
+                reveal(rowIdx + 1, colIdx - 1);
+                reveal(rowIdx + 1, colIdx);
+                reveal(rowIdx + 1, colIdx + 1);
             };
-            reveal(rowIdx - 1, colIdx - 1);
-            reveal(rowIdx - 1, colIdx);
-            reveal(rowIdx - 1, colIdx + 1);
-            reveal(rowIdx, colIdx - 1);
-            reveal(rowIdx, colIdx + 1);
-            reveal(rowIdx + 1, colIdx - 1);
-            reveal(rowIdx + 1, colIdx);
-            reveal(rowIdx + 1, colIdx + 1);
     };
-
-    console.log(board)
-    // 1. Set cell.isRevealed to true
-    // 2. Set cell.isFlagged to false
-    // 3. If the cell has zero adjacent mines (cell.adjMineCount is 0)
-    // 3.1. For each neighboring cell object of cell
-    // 3.1.1. If the neighbor is not revealed AND the
-    //        neighbor is not a mine, reveal the
-    //        neighbor recursively - reveal(neighbor)
-    // Note that there's no reason to call render because that's
-    // going to be called in handleCellClick
