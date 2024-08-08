@@ -2,7 +2,7 @@
 A unique take on the classic minesweeper game.
 
 ## Introduction
-![Logo of a shrimp in a net on an ocean background](/Assets/logo.jpg)
+![Logo of a shrimp in a net on an ocean background](/Assets/testlogov2.png)
 
 ### Welcome to NetSweeper!
 This is a new and unique take on a classic game that unless you were growing up during the computer boom of the late 90's you probably have no idea what that even is! So here is a brief description directly taken from the original minesweeper game!
