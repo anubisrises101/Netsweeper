@@ -1,6 +1,6 @@
 
 body {
-    background-image: url('../Assets/shrimp_boat.jpg');
+    background-image: url('../assets/shrimp_boat.jpg');
     background-size: 100%;
     display: flex;
     justify-content: space-between;
