@@ -1,9 +1,9 @@
 /*----- constants -----*/
-const BOARD_ROWS = 10;
-const BOARD_COLS = 10;
-
+const BOARD_ROWS = 2;
+const BOARD_COLS = 2;
 
 /*----- state variables -----*/
+let numNets;
 let winner;
 let looser;
 let board;
@@ -16,7 +16,9 @@ const shrimpButtonEl = document.getElementById('live_shrimp');
 const deadShrimpBtmEl = document.getElementById('fried_shrimp');
 const winMessage = document.getElementById('winner');
 const message = document.getElementById('message');
-const splashAudio = document.getElementById('splash');
+const splashAudio = document.getElementById('splashing');
+const winnerAudio = document.getElementById('winner')
+const netAudio = document.getElementById('net')
 
 /*----- event listeners -----*/
 shrimpButtonEl.addEventListener('click', () => {
@@ -42,12 +44,12 @@ function init() {
     removeCellsInBoard();
     board = [];
     cellEls = null;
+    winner = null;
+    looser = null;
     generateCellsInBoard();
     cellEls = document.querySelectorAll('.cell');
     setNets();
     computeAdjacentNetCounts();
-    winner = null;
-    looser = null;
     render();
 };
 
@@ -69,6 +71,21 @@ function render() {
     });
 };
 
+// function getWinner() {
+//     let unrevealed = BOARD_ROWS * BOARD_COLS
+//     for (let rowIdx = 0; rowIdx < BOARD_ROWS; rowIdx++) {
+//         console.log('rowIdx', rowIdx)
+//         for (let colIdx = 0; colIdx < BOARD_COLS; colIdx++) {
+//             console.log('colIdx', colIdx)
+//             console.log(board[rowIdx][colIdx].isRevealed)
+//             board[rowIdx][colIdx].isRevealed ? unrevealed-- : null;
+//             console.log(unrevealed, numNets)
+//             if (!board[rowIdx][colIdx].isRevealed && board[rowIdx][colIdx].isNet && unrevealed === numNets) return true;
+//             // if (!board[rowIdx][colIdx].isRevealed) return null;
+//         };
+//     };
+//     return true;
+// };
 
 function getWinner() {
     let counter = 0;
@@ -78,13 +95,22 @@ function getWinner() {
                 counter++
             };
         };
+    };    
+    if (counter === 0) {
+        container.removeEventListener('click', handleReveal);
+        container.removeEventListener('contextmenu', handleToggleFlag);
+        message.innerText = 'Congratulations you won!';
+        playWinner();
+        return true
     };
-    return counter === 0 ? true : false;
+    return false
 };  
 
 function gameOver(cell) {
     if (cell.isNet) {
         message.innerText = 'Oh no your shrimp has been caught!'
+        // shrimpButtonEl.style.display = hidden;
+        // deadShrimpBtmEl.style.display = none;
         container.removeEventListener('click', handleReveal);
         container.removeEventListener('contextmenu', handleToggleFlag);
     };
@@ -103,15 +129,20 @@ function handleToggleFlag(evt) {
     const cell = getCellObj(evt.target);
     if (cell.isRevealed) return;
     cell.isFlagged = !cell.isFlagged;
-    console.log(winner);
     render();
 };
 
-function playSplash() {
-    console.log('sound is running')
-    splashAudio.play();
-    // splashAudio.pause()
+// function playSplash() {
+//     splashAudio.play();
+// };
+
+function playWinner() {
+    winnerAudio.play();
 };
+
+// function playNet() {
+//     netAudio.play();
+// };
 
 function handleReveal(evt) {
     if (!evt.target.matches('.cell')) return;
@@ -119,13 +150,17 @@ function handleReveal(evt) {
     if (cell.isRevealed) return;
     if (cell.isNet) {
         cell.isRevealed = true;
+        looser = gameOver(cell);
     };
-    winner = getWinner();
-    looser = gameOver(cell);
     reveal(cell.rowIdx, cell.colIdx);
-    if (cell.isRevealed && !cell.isNet) {
-        playSplash()
-    };
+    winner = getWinner();
+    console.log(winner);
+    // if (cell.isRevealed && !cell.isNet) {
+    //     playSplash()
+    // };
+    // if (cell.isRevealed && cell.isNet) {
+    //     playNet();
+    // };
     render();
 };
 
@@ -160,6 +195,7 @@ function generateCellsInBoard() {
 function setNets() {
     const NET_PCT = .20;
     let netsToPlace = Math.round(BOARD_ROWS * BOARD_COLS * NET_PCT);
+    numNets = netsToPlace;
     while (netsToPlace > 0) {
         let rndRowIdx = Math.floor(Math.random() * BOARD_ROWS);
         let rndColIdx = Math.floor(Math.random() * BOARD_COLS);
