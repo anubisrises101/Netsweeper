@@ -24,7 +24,7 @@ body {
 }
 
 #stats {
-    font-size: 12px;
+    font-size: 2vh;
     font-style: italic;
     font-weight: bold;
     color: rgb(0, 255, 251);
@@ -42,7 +42,8 @@ body {
 }
 
 #logo {
-    max-width: 125px;
+    height: 25vh;
+    width: 25vh;
     margin-left: 200px;
 }
 
@@ -67,19 +68,22 @@ body {
 }
 
 #fried_shrimp {
-    /* visibility: hidden; */
     display: none;
+    height: 7vh;
+    width: 9vh;
+    font-size: 5vh;
 }
 
 #live_shrimp {
     align-items: center;
+    height: 7vh;
+    width: 9vh;
+    font-size: 5vh;
 }
 
 .buttonBox {
     display: flex;
     justify-content: right;
-    /* margin-right: 123px; 
-    make the button squared and center*/
 }
 
 #rightSide {
@@ -93,6 +97,7 @@ body {
     justify-content: center;
     margin-left: 200px;
     color: #2d1bb3;
+    font-size: 5vh;
 
 }
 

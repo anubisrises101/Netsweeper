@@ -1,6 +1,10 @@
 /*----- constants -----*/
 const BOARD_ROWS = 2;
 const BOARD_COLS = 2;
+const splashAudio = new Audio("../Assets/splash.wav");
+const netAudio = new Audio("../Assets/net.mp3");
+const winnerAudio = new Audio("../Assets/winner.mp3");
+
 
 /*----- state variables -----*/
 let numNets;
@@ -16,9 +20,6 @@ const shrimpButtonEl = document.getElementById('live_shrimp');
 const deadShrimpBtmEl = document.getElementById('fried_shrimp');
 const winMessage = document.getElementById('winner');
 const message = document.getElementById('message');
-const splashAudio = document.getElementById('splashing');
-const winnerAudio = document.getElementById('winner')
-const netAudio = document.getElementById('net')
 
 /*----- event listeners -----*/
 shrimpButtonEl.addEventListener('click', () => {
@@ -50,6 +51,8 @@ function init() {
     cellEls = document.querySelectorAll('.cell');
     setNets();
     computeAdjacentNetCounts();
+    shrimpButtonEl.style = 'display:flex';
+    deadShrimpBtmEl.style.display = 'none';
     render();
 };
 
@@ -57,11 +60,11 @@ function render() {
     cellEls.forEach((cellEl) => {
         const cell = getCellObj(cellEl);
         if (cell.isRevealed) {
-            cellEl.classList.add('revealed')
+            cellEl.classList.add('revealed');
             if (cell.isNet) {
                 cellEl.innerText = '🕸️';
             } else if (cell.adjNetCount > 0) {
-                cellEl.innerText = cell.adjNetCount
+                cellEl.innerText = cell.adjNetCount;
             };
         } else if (cell.isFlagged) {
             cellEl.innerText = '🛟';
@@ -71,28 +74,12 @@ function render() {
     });
 };
 
-// function getWinner() {
-//     let unrevealed = BOARD_ROWS * BOARD_COLS
-//     for (let rowIdx = 0; rowIdx < BOARD_ROWS; rowIdx++) {
-//         console.log('rowIdx', rowIdx)
-//         for (let colIdx = 0; colIdx < BOARD_COLS; colIdx++) {
-//             console.log('colIdx', colIdx)
-//             console.log(board[rowIdx][colIdx].isRevealed)
-//             board[rowIdx][colIdx].isRevealed ? unrevealed-- : null;
-//             console.log(unrevealed, numNets)
-//             if (!board[rowIdx][colIdx].isRevealed && board[rowIdx][colIdx].isNet && unrevealed === numNets) return true;
-//             // if (!board[rowIdx][colIdx].isRevealed) return null;
-//         };
-//     };
-//     return true;
-// };
-
 function getWinner() {
     let counter = 0;
     for (let rowIdx = 0; rowIdx < BOARD_ROWS; rowIdx++) {
         for (let colIdx = 0; colIdx < BOARD_COLS; colIdx++) {
             if (!board[rowIdx][colIdx].isRevealed && !board[rowIdx][colIdx].isNet) {
-                counter++
+                counter++;
             };
         };
     };    
@@ -100,17 +87,18 @@ function getWinner() {
         container.removeEventListener('click', handleReveal);
         container.removeEventListener('contextmenu', handleToggleFlag);
         message.innerText = 'Congratulations you won!';
-        playWinner();
-        return true
+        winnerAudio.volume = .15;
+        winnerAudio.play();
+        return true;
     };
-    return false
+    return false;
 };  
 
 function gameOver(cell) {
     if (cell.isNet) {
         message.innerText = 'Oh no your shrimp has been caught!'
-        // shrimpButtonEl.style.display = hidden;
-        // deadShrimpBtmEl.style.display = none;
+        shrimpButtonEl.style = 'display:none';
+        deadShrimpBtmEl.style.display = 'flex';
         container.removeEventListener('click', handleReveal);
         container.removeEventListener('contextmenu', handleToggleFlag);
     };
@@ -136,9 +124,9 @@ function handleToggleFlag(evt) {
 //     splashAudio.play();
 // };
 
-function playWinner() {
-    winnerAudio.play();
-};
+// function playWinner() {
+//     winnerAudio.play();
+// };
 
 // function playNet() {
 //     netAudio.play();
@@ -154,13 +142,14 @@ function handleReveal(evt) {
     };
     reveal(cell.rowIdx, cell.colIdx);
     winner = getWinner();
-    console.log(winner);
-    // if (cell.isRevealed && !cell.isNet) {
-    //     playSplash()
-    // };
-    // if (cell.isRevealed && cell.isNet) {
-    //     playNet();
-    // };
+    if (cell.isRevealed && !cell.isNet) {
+        splashAudio.volume = .25
+        splashAudio.play()
+    };
+    if (cell.isRevealed && cell.isNet) {
+        netAudio.volume = .25
+        netAudio.play()
+    };
     render();
 };
 
