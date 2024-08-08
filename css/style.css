@@ -9,6 +9,11 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#title {
+    width: 50vh;
+    margin-bottom: 10vh;
+}
+
 @media screen and (max-width: 600px){
     body {
         flex-direction: column;
@@ -42,9 +47,9 @@ body {
 }
 
 #logo {
-    height: 25vh;
-    width: 25vh;
-    margin-left: 200px;
+    height: 45vh;
+    width: 45vh;
+    margin-left: 15vh;
 }
 
 #content {
