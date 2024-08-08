@@ -1,9 +1,9 @@
 /*----- constants -----*/
 const BOARD_ROWS = 10;
 const BOARD_COLS = 10;
-const splashAudio = new Audio("/Assets/splash.wav");
-const netAudio = new Audio("/Assets/net.mp3");
-const winnerAudio = new Audio("/Assets/winner.mp3");
+const splashAudio = new Audio("Assets/splash.wav");
+const netAudio = new Audio("Assets/net.mp3");
+const winnerAudio = new Audio("Assets/winner.mp3");
 
 
 /*----- state variables -----*/
@@ -119,18 +119,6 @@ function handleToggleFlag(evt) {
     cell.isFlagged = !cell.isFlagged;
     render();
 };
-
-// function playSplash() {
-//     splashAudio.play();
-// };
-
-// function playWinner() {
-//     winnerAudio.play();
-// };
-
-// function playNet() {
-//     netAudio.play();
-// };
 
 function handleReveal(evt) {
     if (!evt.target.matches('.cell')) return;
