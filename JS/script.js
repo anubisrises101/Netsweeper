@@ -96,7 +96,7 @@ function getWinner() {
 
 function gameOver(cell) {
     if (cell.isNet) {
-        message.innerText = 'Oh no your shrimp has been caught!'
+        message.innerText = 'Oh no your shrimp has been caught!';
         shrimpButtonEl.style = 'display:none';
         deadShrimpBtmEl.style.display = 'flex';
         container.removeEventListener('click', handleReveal);
@@ -131,20 +131,20 @@ function handleReveal(evt) {
     reveal(cell.rowIdx, cell.colIdx);
     winner = getWinner();
     if (cell.isRevealed && !cell.isNet) {
-        splashAudio.volume = .25
-        splashAudio.play()
+        splashAudio.volume = .25;
+        splashAudio.play();
     };
     if (cell.isRevealed && cell.isNet) {
-        netAudio.volume = .25
-        netAudio.play()
+        netAudio.volume = .25;
+        netAudio.play();
     };
     render();
 };
 
 function removeCellsInBoard() {
-    let cellsToDelete = document.querySelectorAll('.cell')
+    let cellsToDelete = document.querySelectorAll('.cell');
     cellsToDelete.forEach((cell) => {
-        container.removeChild(cell)
+        container.removeChild(cell);
     });
 };
 
@@ -204,7 +204,7 @@ function computeAdjacentNetCounts() {
 
 function reveal(rowIdx, colIdx) {
             if (rowIdx < 0 || rowIdx >= BOARD_ROWS || colIdx < 0 || colIdx >= BOARD_COLS) {
-                return
+                return;
             };
             if (board[rowIdx][colIdx].isRevealed || board[rowIdx][colIdx].isNet) return;
             board[rowIdx][colIdx].isRevealed = true;
