@@ -1,6 +1,6 @@
 /*----- constants -----*/
-const BOARD_ROWS = 10;
-const BOARD_COLS = 10;
+const BOARD_ROWS = 2;
+const BOARD_COLS = 2;
 const splashAudio = new Audio("assets/splash.wav");
 const netAudio = new Audio("assets/net.mp3");
 const winnerAudio = new Audio("assets/winner.mp3");
